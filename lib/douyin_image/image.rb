@@ -11,9 +11,12 @@ module DouyinImage
 
       im_r = im_r.embed(offset, offset, im.width, im.height)
 
-      # 获取最终图片数据
+      # 生成图片数据
       target_im = im_r.add(im_gb)
       target_im = random_part_offset(target_im, options)
+
+      # 优化偏移导致的图片边框颜色问题
+      target_im = target_im.embed(-offset, -offset, im.width-offset, im.height-offset)
       target_im.write_to_file(output_path)
     end
 
