@@ -3,7 +3,7 @@ module DouyinImage
   class Image
 
     def generate(file_path, output_path, options={})
-      offset = options.delete(:offset) || 8
+      offset = (options.delete(:offset) || 8).to_i.abs
 
       im = Vips::Image.new_from_file(file_path)
       im_r = im * [1, 0, 0] # 获取 R 值数据
@@ -40,15 +40,16 @@ module DouyinImage
     # 随机获取图片切片位置以及大小信息
     def get_random_parts(image, options={})
       # 图片切割份数
-      part_count = options.fetch(:part_count, rand(5..10))
-      tmp_height = (image.height / part_count).to_i
+      part_count = options.fetch(:part_count, rand(5..10)).to_i.abs
 
       part_count.times.map do |index|
+        tmp_height = (image.height / part_count).to_i
+
         x = rand(1...image.width)
         y = rand(1...tmp_height) + index * tmp_height
 
-        part_width = options.fetch(:part_width, rand(10..30))
-        part_height = options.fetch(:part_height, rand(10..30))
+        part_width = options.fetch(:part_width, rand(10..30)).to_i.abs
+        part_height = options.fetch(:part_height, rand(10..30)).to_i.abs
 
         [x, y, part_width, part_height]
       end
