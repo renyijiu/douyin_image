@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "optparse"
+require "douyin_image"
+
+class DouyinOptparser
+
+  class Parser
+    attr_accessor :input_path,
+                  :output_path,
+                  :offset,
+                  :part_count,
+                  :part_width,
+                  :part_height
+
+    def initialize
+      self.input_path = nil
+      self.output_path = nil
+      self.offset = 8
+      self.part_count = rand(5..10)
+      self.part_width = rand(10..30)
+      self.part_height = rand(10..30)
+    end
+
+    def define_options(parser)
+      parser.banner = "Usage: douyin [options]"
+      parser.separator ""
+      parser.separator "Specific options:"
+
+      input_path_option(parser)
+      output_path_option(parser)
+      offset_option(parser)
+      part_count_option(parser)
+      part_width_option(parser)
+      part_height_option(parser)
+
+      parser.separator ""
+      parser.separator "Common options:"
+
+      parser.on_tail("--help", "Show the help message") do
+        puts parser
+        exit
+      end
+      # Another typical switch to print the version.
+      parser.on_tail("--version", "Show version") do
+        puts DouyinImage::VERSION
+        exit
+      end
+    end
+
+    private
+
+    def input_path_option(parser)
+      parser.on("-i", "--input IMAGE_PATH", "the input image's path") do |input|
+        self.input_path = input
+      end
+    end
+
+    def output_path_option(parser)
+      parser.on("-o", "--output [OUTPUT_PATH]", "the custom output path") do |output|
+        self.output_path = output
+      end
+    end
+
+    def offset_option(parser)
+      parser.on("-f", "--offset [OFFSET]", "the R channel image offset") do |offset|
+        self.offset = offset
+      end
+    end
+
+    def part_count_option(parser)
+      parser.on("-c", "--count [COUNT]", "the small part's count") do |count|
+        self.part_count = count
+      end
+    end
+
+    def part_width_option(parser)
+      parser.on("-w", "--width [WIDTH]", "the small part's width") do |width|
+        self.part_width = width
+      end
+    end
+
+    def part_height_option(parser)
+      parser.on("-h", "--height [HEIGHT]", "the small part's height") do |height|
+        self.part_height = height
+      end
+    end
+
+  end
+
+  attr_reader :parser, :options
+  def parse(args)
+    @options = Parser.new
+    @args = OptionParser.new do |parser|
+      @options.define_options(parser)
+      parser.parse!(args)
+    end
+    @options
+  end
+end
+
+parser = DouyinOptparser.new
+options = parser.parse(ARGV)
+
+DouyinImage.generate(options.input_path, options.output_path, {
+    offset: options.offset,
+    part_count: options.part_count,
+    part_width: options.part_width,
+    part_height: options.part_height
+})
