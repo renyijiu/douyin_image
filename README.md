@@ -1,39 +1,101 @@
 # DouyinImage
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/douyin_image`. To experiment with that code, run `bin/console` for an interactive prompt.
+生成抖音风格的图片。Have Fun！😊
 
-TODO: Delete this and the text above, and describe your gem
+## 安装
 
-## Installation
-
-Add this line to your application's Gemfile:
+在你的Gemfile中添加下列代码：
 
 ```ruby
 gem 'douyin_image'
 ```
 
-And then execute:
+然后执行下列命令：
 
-    $ bundle
+```shell
+$ bundle
+```
 
-Or install it yourself as:
+或者是使用下列命令直接安装gem：
 
-    $ gem install douyin_image
+```shell
+$ gem install douyin_image
+```
 
-## Usage
+## 使用
 
-TODO: Write usage instructions here
+### 方法调用
 
-## Development
+当你需要在项目中使用时，可以通过下列代码进行调用：
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+# generate Douyin style image with the input image
+#
+# @param file_path String - image file path
+# @param output_path String - output directory, default: same with input file
+# options:
+#   offset: the R channel image offset, default: 8
+#   part_count: the small part's count, default: rand(5..10)
+#   part_width: the small part's width, default: rand(10..30)
+#   part_height: the small part's height, default: rand(10..30)
+#
+# Example:
+#   DouyinImage.generate('./test.jpg', './test/', {offset: 10})
+#
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+DouyinImage.generate(file_path, output_path=nil, options={})
+```
 
-## Contributing
+### 命令行
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/douyin_image. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+你也可以通过下列命令查看支持的选项以及操作
 
-## Code of Conduct
+```shell
+$ douyin --help
 
-Everyone interacting in the DouyinImage project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/douyin_image/blob/master/CODE_OF_CONDUCT.md).
+Usage: douyin [options]
+
+Specific options:
+    -i, --input IMAGE_PATH           the input image's path
+    -o, --output [OUTPUT_PATH]       the custom output path
+    -f, --offset [OFFSET]            the R channel image offset
+    -c, --count [COUNT]              the small part's count
+    -w, --width [WIDTH]              the small part's width
+    -h, --height [HEIGHT]            the small part's height
+
+Common options:
+        --help                       Show the help message
+        --version                    Show version
+```
+
+
+
+## 例子
+
+```ruby
+命令行调用：
+$ bundle exec douyin -i './tmp/input.jpg' -o './tmp/' -f 20 -c 10
+
+或者是：
+DouyinImage.generate('./tmp/input.jpg', './tmp/', {offset: 20, part_count: 10})
+```
+
+### 输入图片
+
+![](./tmp/input.jpg)
+
+
+
+输出结果
+
+![](./tmp/input_douyin.jpg)
+
+## 如何贡献
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+欢迎贡献相关代码或是反馈使用时遇到的问题👏，另外请记得为你的代码编写测试。
