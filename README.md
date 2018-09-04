@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.com/renyijiu/douyin_image.svg?branch=master)](https://travis-ci.com/renyijiu/douyin_image)
+[![Gem Version](https://badge.fury.io/rb/douyin_image.svg)](https://badge.fury.io/rb/douyin_image)
+[![Maintainability](https://api.codeclimate.com/v1/badges/77fc5413d4cc1b2ecc2d/maintainability)](https://codeclimate.com/github/renyijiu/douyin_image/maintainability)
+
+⚠️ 图片处理依赖于[ruby-vips](https://github.com/jcupitt/ruby-vips)，请确保使用前电脑已正确安装[libvips](https://github.com/jcupitt/libvips)
+
 # DouyinImage
 
 生成抖音风格的图片。Have Fun！😊
